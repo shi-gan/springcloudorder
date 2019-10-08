@@ -1,5 +1,6 @@
 spring:
   application:
+    # 该微服务在注册中心的名字
     name: menu
   profiles:
     active: dev

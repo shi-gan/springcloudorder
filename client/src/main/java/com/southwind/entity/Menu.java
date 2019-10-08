@@ -7,7 +7,7 @@ public class Menu {
     private String name;
     private double price;
     private String flavor;
-    private Type type;  //口味
+    private Type type;
 
 //    public Menu(){};
 //    public Menu(long id, String name, double price, String flavor, Type type) {
