@@ -1,0 +1,18 @@
+#服务消费者只需要访问服务提供者
+
+server:
+  port: 8030
+spring:
+  application:
+    name: client
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+
+eureka:
+  client:
+    service-url:
+#      在注册中心注册
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
