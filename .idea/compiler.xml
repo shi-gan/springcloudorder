@@ -2,18 +2,23 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="client" />
         <module name="configserver" />
         <module name="eurekaserver" />
+        <module name="menu" />
         <module name="order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client" target="1.8" />
       <module name="configserver" target="1.8" />
       <module name="eurekaserver" target="1.8" />
+      <module name="menu" target="1.8" />
       <module name="order" target="1.8" />
       <module name="springcloudorder" target="1.8" />
     </bytecodeTargetLevel>
