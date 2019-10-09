@@ -19,7 +19,7 @@ public class AccountHandler {
     @Autowired
     private AccountFeign accountFeign;
 
-    @PostMapping("/login")  //不是rest风格
+    @PostMapping("/login")  //  不是rest风格！！！！
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("type") String type, HttpSession session){
         Object object = accountFeign.login(username,password,type);//返回的是hashmap结构的
         LinkedHashMap<String, Object> hashMap = (LinkedHashMap)object;
@@ -37,7 +37,8 @@ public class AccountHandler {
                     user.setId(id);
                     user.setNickname(nickname);
                     session.setAttribute("user",user);
-                    result = "index";
+                    result = "index";    //html只能用转发的形式，需要经过后台创建session获得session
+                    //handler解析视图
                     break;
                 case "admin":
                     Admin admin = (Admin)object;
@@ -52,8 +53,8 @@ public class AccountHandler {
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        session.invalidate();
-        return "login";
+        session.invalidate();  // 使session失效
+        return "redirect:/login.html";
     }
 
     @RequestMapping("/redirect/{target}")

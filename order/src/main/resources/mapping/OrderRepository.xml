@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.southwind.repository.OrderRepository">
+
+	<resultMap id="orderMap" type="Order">
+		<id property="id" column="id"/>
+		<result property="date" column="date"/>
+		<result property="state" column="state"/>
+		<!-- 映射menu  t_order中只包含menu的主键mid 而实体order包含menu,user 要映射必须通过mid查找-->
+		<!--Menu中包含了type,所以需要从menu微服务中拿 MenuRepository.xml TypeRepository.xml     -->
+		<association property="menu" select="com.southwind.repository.MenuRepository.findById" column="mid"></association>
+	</resultMap>
+
+	<!--<resultMap id="orderMap2" type="Order">-->
+		<!--<id property="id" column="oid"/>-->
+		<!--<result property="date" column="date"/>-->
+		<!--&lt;!&ndash; 映射menu &ndash;&gt;-->
+		<!--<association property="menu" javaType="Menu">-->
+			<!--<id property="id" column="mid"/>-->
+			<!--<result property="name" column="name"/>-->
+			<!--<result property="price" column="price"/>-->
+			<!--<result property="flavor" column="flavor"/>-->
+		<!--</association>-->
+		<!--&lt;!&ndash; 映射user &ndash;&gt;-->
+		<!--<association property="user" javaType="User">-->
+			<!--<id property="id" column="uid"/>-->
+			<!--<result property="nickname" column="nickname"/>-->
+			<!--<result property="telephone" column="telephone"/>-->
+			<!--<result property="address" column="address"/>-->
+		<!--</association>-->
+	<!--</resultMap>-->
+
+	<!--传入的值是order 包含了 user,menu... 但是表中只有外键id-->
+	<insert id="save" parameterType="Order">
+		insert into t_order(uid,mid,date,state) values(#{user.id},#{menu.id},#{date},0)
+	</insert>
+
+	<select id="findAllByUid" resultMap="orderMap">
+		select id,mid,date,state from t_order where uid=#{param3} limit #{param1},#{param2}
+	</select>
+
+	<select id="countByUid" resultType="int" parameterType="int">
+		select count(*) from t_order where uid=#{uid}
+	</select>
+
+
+
+	<!--<select id="findAllByUid" resultMap="orderMap">-->
+		<!--select m.id mid,m.name,m.price,m.flavor,o.id oid,o.date,o.state from t_order o,t_menu m where o.mid = m.id and o.uid = #{param1} order by oid limit #{param2},#{param3}-->
+	<!--</select>-->
+
+	<!--<select id="countByUid" parameterType="long" resultType="int">-->
+		<!--select count(*) from t_order where uid = #{uid}-->
+	<!--</select>-->
+
+	<!--<delete id="deleteByMid" parameterType="long">-->
+		<!--delete from t_order where mid = #{mid}-->
+	<!--</delete>-->
+
+	<!--<delete id="deleteByUid" parameterType="long">-->
+		<!--delete from t_order where uid = #{uid}-->
+	<!--</delete>-->
+
+	<!--<select id="findAllByState" resultMap="orderMap2">-->
+		<!--select m.id mid,m.name,m.price,m.flavor,o.id oid,o.date,u.id uid,u.nickname,u.telephone,u.address from t_order o,t_menu m,t_user u where o.mid = m.id and o.uid = u.id and o.state = #{param1} order by oid limit #{param2},#{param3}-->
+	<!--</select>-->
+
+	<!--<select id="countByState" parameterType="int" resultType="int">-->
+		<!--select count(*) from t_order where state = #{state}-->
+	<!--</select>-->
+
+	<!--<update id="updateState">-->
+		<!--update t_order set aid = #{param2},state = #{param3} where id = #{param1}-->
+	<!--</update>-->
+
+</mapper>

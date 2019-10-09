@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.southwind.repository.MenuRepository">
+
+	<resultMap id="menuMap" type="Menu">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="flavor" column="flavor"/>
+		<!-- 上面是Menu表，下面是 映射type -->
+		<association property="type" select="com.southwind.repository.TypeRepository.findById" column="tid">
+			<id property="id" column="tid"/>
+			<result property="name" column="tname"/>
+		</association>
+	</resultMap>
+
+    <select id="findAll" resultMap="menuMap">
+		select * from t_menu limit #{param1},#{param2};
+	</select>
+
+	<select id="count" resultType="int">
+		select count(id) from t_menu;
+	</select>
+
+	<insert id="save" parameterType="com.southwind.entity.Menu">
+--                                 t_menu数据表中有id
+		insert into t_menu(name,price,flavor,tid) values(#{name},#{price},#{flavor},#{type.id})
+	</insert>
+
+	<select id="findById" parameterType="long" resultMap="menuMap">
+		select * from t_menu where id = #{id}
+	</select>
+
+	<update id="update" parameterType="com.southwind.entity.Menu">
+		update t_menu set name = #{name},price = #{price},flavor = #{flavor},tid=#{type.id} where id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="long">
+		delete from t_menu where id = #{id}
+	</delete>
+</mapper>
