@@ -1,0 +1,11 @@
+spring:
+  application:
+    # 该微服务在注册中心的名字
+    name: account
+  profiles:
+    active: dev
+  cloud:
+    config:
+      # 连接的是配置中心
+      uri: http://localhost:8762
+      fail-fast: true

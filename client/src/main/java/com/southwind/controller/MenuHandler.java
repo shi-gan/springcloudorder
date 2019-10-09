@@ -29,7 +29,7 @@ public class MenuHandler {
     }
 
     //没有注解ResponseBody 返回的是视图
-    @GetMapping("/redirect/{location}")
+    @GetMapping("/redirect/{location}")   //index
     public String redirect(@PathVariable("location") String location){
         return location;   // location 是 index
     }

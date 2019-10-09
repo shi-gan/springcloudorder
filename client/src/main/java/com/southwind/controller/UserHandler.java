@@ -24,7 +24,7 @@ public class UserHandler {
         return userFeign.findAll(index, limit);
     }
 
-    @GetMapping("/redirect/{location}")
+    @GetMapping("/redirect/{location}")   // user_manage
     public String redirect(@PathVariable("location") String location){
         return location;   // location 是 user_manage
     }
