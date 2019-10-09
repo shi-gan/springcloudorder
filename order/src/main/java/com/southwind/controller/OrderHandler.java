@@ -31,7 +31,7 @@ public class OrderHandler {
     }
 
     @GetMapping("/findAllByUid/{index}/{limit}/{uid}")  //其中的uid是session中得到的
-    public OrderVO findAllByUid(@PathVariable("index") int index, @PathVariable("limit") int limit, @PathVariable("uid") int uid){
+    public OrderVO findAllByUid(@PathVariable("index") int index, @PathVariable("limit") int limit, @PathVariable("uid") long uid){
 
         OrderVO orderVO = new OrderVO();
         orderVO.setMsg("");

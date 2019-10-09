@@ -26,7 +26,7 @@ public class OrderHandler {
         order.setMenu(menu);// order类中包含了其他的类 （Menu, User.....）
         order.setDate(new Date());
         orderFeign.save(order);
-        return "index";
+        return "order";    // 订购后跳到 order 页面
     }
 
     @GetMapping("/findAllByUid")
