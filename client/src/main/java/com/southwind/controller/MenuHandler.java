@@ -21,8 +21,8 @@ public class MenuHandler {
 //    @Autowired
 //    private OrderFeign orderFeign;
 
-    @GetMapping("/findAll")                           // 普通的传入方式     不是restful
-    @ResponseBody   // 说明只直接返回数据而不是视图 http://localhost:8030/client/findAll?page=1&limit=10
+    @GetMapping("/findAll") // 不写参数表单传入          普通的传入方式     不是restful
+    @ResponseBody   // 说明只直接返回数据而不是视图 http://localhost:8030/menu/findAll?page=1&limit=10
     public MenuVO findAll(@RequestParam("page") int page, @RequestParam("limit") int limit){
         int index = (page-1)*limit;
         return menuFeign.findAll(index, limit);

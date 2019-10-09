@@ -39,7 +39,7 @@ public class UserHandler {
         return userRepository.count();
     }
 
-    @PostMapping("/save")
+    @PostMapping("/save") //微服务之间通过json传数据需要requestBody
     public void save(@RequestBody User user){
         userRepository.save(user);
     }

@@ -8,43 +8,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Date;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserHandler {
 
     @Autowired
     private UserFeign userFeign;
 
-    @GetMapping("/findAll/{index}/{limit}")
-    public UserVO findAll(@PathVariable("index") int index, @PathVariable("limit") int limit){
+    @GetMapping("/findAll")  //不是rest风格
+    @ResponseBody
+    public UserVO findAll(@RequestParam("page") int page, @RequestParam("limit") int limit){
+        int index = (page-1)*limit;
         return userFeign.findAll(index, limit);
     }
 
-    @GetMapping("/findById/{id}")
-    public User findById(@PathVariable("id") long id){
-        return userFeign.findById(id);
+    @GetMapping("/redirect/{location}")
+    public String redirect(@PathVariable("location") String location){
+        return location;   // location 是 user_manage
     }
+
+
 
     @GetMapping("/count")
     public int count(){
         return userFeign.count();
     }
 
-    @PostMapping("/save")
-    public void save(@RequestBody User user){
+    @PostMapping("/save") //前端传入的不是json,是传统传参不用@requestbody
+    public String save(User user){
+        user.setRegisterdate(new Date());
         userFeign.save(user);
+        return "redirect:/user/redirect/user_manage";
     }
 
-    @PutMapping("/update") //传入的是json数据
-    public void update(@RequestBody User user){
-        userFeign.update(user);
-    }
 
-    @DeleteMapping("/deleteById/{id}")
-    public void deleteId(@PathVariable("id") long id){
+    @GetMapping("/deleteById/{id}")
+    public String deleteId(@PathVariable("id") long id){
         userFeign.deleteById(id);
+        return "redirect:/user/redirect/user_manage";
     }
 
 }
