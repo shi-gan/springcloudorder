@@ -24,12 +24,13 @@ public class UserHandler {
         return userFeign.findAll(index, limit);
     }
 
-    @GetMapping("/redirect/{location}")   // user_manage
-    public String redirect(@PathVariable("location") String location){
-        return location;   // location 是 user_manage
-    }
-
-
+    //页面跳转统一起来
+//    @GetMapping("/redirect/{location}")   // user_manage
+//    public String redirect(@PathVariable("location") String location){
+//        return location;   // location 是 user_manage
+//    }
+//
+//
 
     @GetMapping("/count")
     public int count(){
@@ -40,14 +41,14 @@ public class UserHandler {
     public String save(User user){
         user.setRegisterdate(new Date());
         userFeign.save(user);
-        return "redirect:/user/redirect/user_manage";
+        return "redirect:/menu/redirect/user_manage";  // 统一在menu中跳转
     }
 
 
     @GetMapping("/deleteById/{id}")
     public String deleteId(@PathVariable("id") long id){
         userFeign.deleteById(id);
-        return "redirect:/user/redirect/user_manage";
+        return "redirect:/menu/redirect/user_manage";
     }
 
 }

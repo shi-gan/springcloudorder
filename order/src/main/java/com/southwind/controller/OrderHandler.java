@@ -14,13 +14,6 @@ import java.util.List;
 @RequestMapping("/order")  // 访问的是配置中心的端口 8010
 public class OrderHandler {
 
-//    @Value("${server.port}")
-//    private String port;
-//
-//    @GetMapping("/index")
-//    public String index(){
-//        return "order的端口："+this.port;
-//    }
     @Autowired
     private OrderRepository orderRepository;
 
@@ -43,6 +36,21 @@ public class OrderHandler {
     @GetMapping("/countByUid/{uid}")
     public int countByUid(@PathVariable("uid") int uid){
         return orderRepository.countByUid(uid);
+    }
+
+
+    @GetMapping("/findAll/{index}/{limit}")
+    public OrderVO findAll(@PathVariable("index") int index, @PathVariable("limit") int limit){
+        OrderVO orderVO = new OrderVO();     // 只找状态 等于0 的订单
+        orderVO.setMsg("");
+        orderVO.setCount(orderRepository.count());
+        orderVO.setData(orderRepository.findAll(index, limit));
+        return orderVO;
+    }
+
+    @GetMapping("/updateState/{id}")    // 将该id状态为1 的订单修改成 0
+    public void updateState(@PathVariable("id") long id){
+        orderRepository.updateState(id);
     }
 
 }

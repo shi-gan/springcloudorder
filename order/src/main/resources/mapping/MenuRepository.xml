@@ -14,28 +14,10 @@
 		</association>
 	</resultMap>
 
-    <select id="findAll" resultMap="menuMap">
-		select * from t_menu limit #{param1},#{param2};
-	</select>
-
-	<select id="count" resultType="int">
-		select count(id) from t_menu;
-	</select>
-
-	<insert id="save" parameterType="com.southwind.entity.Menu">
---                                 t_menu数据表中有id
-		insert into t_menu(name,price,flavor,tid) values(#{name},#{price},#{flavor},#{type.id})
-	</insert>
 
 	<select id="findById" parameterType="long" resultMap="menuMap">
 		select * from t_menu where id = #{id}
 	</select>
 
-	<update id="update" parameterType="com.southwind.entity.Menu">
-		update t_menu set name = #{name},price = #{price},flavor = #{flavor},tid=#{type.id} where id = #{id}
-	</update>
 
-	<delete id="deleteById" parameterType="long">
-		delete from t_menu where id = #{id}
-	</delete>
 </mapper>

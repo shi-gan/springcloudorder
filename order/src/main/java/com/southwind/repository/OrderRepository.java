@@ -11,5 +11,7 @@ public interface OrderRepository {
     public List<Order> findAllByUid(int index, int limit, long uid);//某用户的点单
 
     public int countByUid(long uid);
-
+//    public List<Order> findAll(int index, int limit);
+    public void updateState(long id); //通过id修改订单
+    public int count();
 }

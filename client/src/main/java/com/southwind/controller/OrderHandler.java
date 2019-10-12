@@ -36,17 +36,17 @@ public class OrderHandler {
         int index = (page-1)*limit;
         return orderFeign.findAllByUid(index, limit, user.getId());//uid从session中取出
     }
-//
-//    @GetMapping("/findAllByState")
-//    @ResponseBody
-//    public OrderVO findAllByState(@RequestParam("page") int page, @RequestParam("limit") int limit){
-//        return orderFeign.findAllByState(0, page, limit);
-//    }
-//
-//    @GetMapping("/updateState/{id}/{state}")
-//    public String updateState(@PathVariable("id") long id,@PathVariable("state") int state,HttpSession session){
-//        Admin admin = (Admin) session.getAttribute("admin");
-//        orderFeign.updateState(id,state,admin.getId());
-//        return "redirect:/account/redirect/order_handler";
-//    }
+
+    @GetMapping("/findAllByState")  //与laiyu框架对接不能用rest风格
+    @ResponseBody   //说明返回的是数据
+    public OrderVO findAllByState(@RequestParam("page") int page, @RequestParam("limit") int limit){
+        int index = (page-1)*limit;
+        return orderFeign.findAll(index, limit);
+    }
+
+    @GetMapping("/updateState/{id}")
+    public String updateState(@PathVariable("id") long id){
+        orderFeign.updateState(id);
+        return "redirect:/menu/redirect/order_handler";
+    }
 }

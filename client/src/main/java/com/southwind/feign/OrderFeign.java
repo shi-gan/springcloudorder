@@ -23,9 +23,9 @@ public interface OrderFeign {
 //    @DeleteMapping("/order/deleteByUid/{uid}")
 //    public void deleteByUid(@PathVariable("uid") long uid);
 //
-//    @GetMapping("/order/findAllByState/{state}/{page}/{limit}")
-//    public OrderVO findAllByState(@PathVariable("state") int state, @PathVariable("page") int page, @PathVariable("limit") int limit);
-//
-//    @PutMapping("/order/updateState/{id}/{state}/{aid}")
-//    public void updateState(@PathVariable("id") long id, @PathVariable("state") long state, @PathVariable("aid") long aid);
+    @GetMapping("/order/findAll/{index}/{limit}")
+    public OrderVO findAll(@PathVariable("index") int index, @PathVariable("limit") int limit);
+
+    @GetMapping("/order/updateState/{id}")
+    public void updateState(@PathVariable("id") long id);
 }

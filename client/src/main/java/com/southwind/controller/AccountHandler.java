@@ -24,6 +24,10 @@ public class AccountHandler {
         Object object = accountFeign.login(username,password,type);//返回的是hashmap结构的
         LinkedHashMap<String, Object> hashMap = (LinkedHashMap)object;
         String result = null;
+
+        String idStr = null;
+        long id = 0L;
+
         if(object == null){
             result = "login";//密码错误重新进入登录页面
         }else{
@@ -31,19 +35,24 @@ public class AccountHandler {
                 case "user":
                     User user = new User();
                                    //integer类型 转为 string
-                    String idStr = hashMap.get("id")+"";// 登陆用户的id
-                    long id = Long.parseLong(idStr);
+                    idStr = hashMap.get("id")+"";// 登陆用户的id
+                    id = Long.parseLong(idStr);
                     String nickname = (String)hashMap.get("nickname");
                     user.setId(id);
                     user.setNickname(nickname);
-                    session.setAttribute("user",user);
+                    session.setAttribute("user",user);    // 不是进入菜单管理页面也是进入用户页面
                     result = "index";    //html只能用转发的形式，需要经过后台创建session获得session
                     //handler解析视图
                     break;
                 case "admin":
-                    Admin admin = (Admin)object;
+                    Admin admin = new Admin();
+                    idStr = hashMap.get("id")+"";
+                    id = Long.parseLong(idStr);
+                    String nickname2 = (String)hashMap.get("username");
+                    admin.setId(id);
+                    admin.setUsername(nickname2);   // 管理员 进入的是main/menu_manage页面 也就是管理页面
                     session.setAttribute("admin",admin);
-                    result = "";
+                    result = "main";
                     break;
             }
         }

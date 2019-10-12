@@ -39,7 +39,7 @@
                 <label class="layui-form-label">分类：</label>
                 <div class="layui-input-inline">
                     <select name="type.id">
-                                                                                           <!--被编辑的该条数据menu 编辑时默认显示-->
+                                                                                           <!--被编辑的该条数据menu 编辑时默认显示 将之前设定的提前显示-->
                         <option th:each="type:${list}" th:text="${type.name}" th:value="${type.id}" th:if="${menu.type.id == type.id}" selected></option>
                         <option th:each="type:${list}" th:text="${type.name}" th:value="${type.id}" th:if="${menu.type.id != type.id}" ></option>
                     </select>

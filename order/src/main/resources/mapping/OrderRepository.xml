@@ -9,6 +9,7 @@
 		<!-- 映射menu  t_order中只包含menu的主键mid 而实体order包含menu,user 要映射必须通过mid查找-->
 		<!--Menu中包含了type,所以需要从menu微服务中拿 MenuRepository.xml TypeRepository.xml     -->
 		<association property="menu" select="com.southwind.repository.MenuRepository.findById" column="mid"></association>
+		<association property="user" select="com.southwind.repository.UserRepository.findById" column="uid"></association>
 	</resultMap>
 
 	<!--<resultMap id="orderMap2" type="Order">-->
@@ -31,7 +32,7 @@
 	<!--</resultMap>-->
 
 	<!--传入的值是order 包含了 user,menu... 但是表中只有外键id-->
-	<insert id="save" parameterType="Order">
+	<insert id="save" parameterType="Order">                             <!-- 0 刚订单默认未配送-->
 		insert into t_order(uid,mid,date,state) values(#{user.id},#{menu.id},#{date},0)
 	</insert>
 
@@ -43,6 +44,19 @@
 		select count(*) from t_order where uid=#{uid}
 	</select>
 
+	<select id="findAll" resultMap="orderMap">
+--          mid uid子查找                               查未配送的
+		select id,mid,uid,date,state from t_order where state = 0 limit #{param1},#{param2}
+	</select>
+
+	<!--设置成已配送-->
+	<update id="updateState" parameterType="long">
+		update t_order set state = 1 where id = #{id}
+	</update>
+
+	<select id="count" resultType="int" >
+		select count(*) from t_order where state = 0
+	</select>
 
 
 	<!--<select id="findAllByUid" resultMap="orderMap">-->

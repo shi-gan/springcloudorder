@@ -37,7 +37,7 @@ public class MenuHandler {
     @GetMapping("/deleteById/{id}")  // 删除后请求页面
     public String deleteById(@PathVariable("id") long id){
         menuFeign.deleteById(id);
-        return "redirect:/menu/redirect/index"; //index.html
+        return "redirect:/menu/redirect/menu_manage"; //menu_manage.html
     }
 
     @GetMapping("/findTypes")
@@ -51,14 +51,14 @@ public class MenuHandler {
     @PostMapping("/save")
     public String save(Menu menu){
         menuFeign.save(menu);
-        return "redirect:/menu/redirect/index"; //保存后重定向,到列表中
+        return "redirect:/menu/redirect/menu_manage"; //保存后重定向,到列表中
     }
 
 //    编辑的时候的地址
     @GetMapping("/findById/{id}") //rest风格
     public ModelAndView findById(@PathVariable("id") long id){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("menu_update");
+        modelAndView.setViewName("menu_update");    // menu_update.html 页面   菜单编辑
         modelAndView.addObject("menu", menuFeign.findById(id)); // 被编辑的该条数据
         modelAndView.addObject("list",menuFeign.findTypes());
         return modelAndView;
@@ -66,7 +66,7 @@ public class MenuHandler {
 
     @PostMapping("/update") //更新是一个post请求
     public String update(Menu menu){
-        menuFeign.update(menu);
-        return "redirect:/menu/redirect/index"; //保存后重定向,到列表中
+        menuFeign.update(menu);  // 更新
+        return "redirect:/menu/redirect/menu_manage"; //保存后重定向,到列表中
     }
 }
